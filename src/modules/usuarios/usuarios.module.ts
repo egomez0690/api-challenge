@@ -10,6 +10,7 @@ import { AddressService } from './services/address/address.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ProfileService } from './services/profile/profile.service';
 import { CityService } from './services/city/city.service';
+import { CityExistsRule } from './validators/city-exist-validator';
 
 
 @Module({

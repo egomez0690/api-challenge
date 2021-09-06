@@ -21,7 +21,7 @@ export class UserController {
         try {
             const createdUser = await this.userService.createUser(createUserDTO)
             return res.status(HttpStatus.CREATED).json({
-                message: "Usuario creado correctamente"
+                message: "User succesfully created"
                 //No muestro información del user en esta instancia
             })
             ;
@@ -31,7 +31,7 @@ export class UserController {
                     message: error.message
                 })
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-                message: 'Error interno al crear el usuario. MESSAGE: ' + error
+                message: 'Internal error on user creation. MESSAGE: ' + error
             })
         }       
     }
@@ -42,7 +42,7 @@ export class UserController {
         const user = await this.userService.findUser(userDTO);
         if(!user){
             return res.status(HttpStatus.NOT_FOUND).json({
-                message: "No se encontró un usuario con esas credenciales"
+                message: "User with credentials not found"
             }) ;
         }
         const jwt = await this.jwtService.signAsync({id: user.id});
@@ -56,17 +56,16 @@ export class UserController {
     async getUsers(@Headers() headers) {
         
         const token = headers.authorization;
-
         if (!token){
             throw new UnauthorizedException();
         }
-
+        
         let data;
         try {
             data = await this.jwtService.verifyAsync(token);
         }            
         catch(e){
-            throw new UnauthorizedException('Token inválido');
+            throw new UnauthorizedException('Invalid token');
         } 
                 
         const userId = data['id'];            

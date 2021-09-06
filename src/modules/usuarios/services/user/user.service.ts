@@ -36,15 +36,7 @@ export class UserService {
         let existUser = true;
         let existAddress = true;
         
-        //Verificación de city existente
         const city = await this.cityService.findCityById(createUserDTO.cityId);
-        if(!city){
-            const result = {
-                code: 'ERROR',
-                message: 'City con id ' + createUserDTO.cityId + ' inexistente'
-            }
-            throw result;
-        }
 
         //Verificación de user existente
         let user = await this.findUserByUsername(createUserDTO.username);        
@@ -55,9 +47,7 @@ export class UserService {
                 password: createUserDTO.password
             });                
             user = await entityManager.save(userToCreate);
-        }                
-        
-        
+        }                                
         //const rawData = await entityManager.query('SELECT * FROM usuarios_db.city WHERE id = ?',[createUserDTO.cityId]);        
         //console.log("rawData:" , rawData);
         
@@ -79,7 +69,7 @@ export class UserService {
             if (profile){
                 const result = {
                     code: 'ERROR',
-                    message: 'Perfil ya existente para el usuario ' + user.username
+                    message: 'The profile already exists for the user ' + user.username
                 }
                 throw result;
             }

@@ -10,7 +10,8 @@ import { Profile } from '../usuarios/entities/profile/profile-entity';
     imports: [
       TypeOrmModule.forRoot({
         type: 'mysql',
-        host: 'mysqldb',
+        //host: 'mysqldb',
+        host: 'localhost',
         port: 3306,
         username: 'root',
         password: '1234',
