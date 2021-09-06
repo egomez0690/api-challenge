@@ -23,7 +23,8 @@ $ docker-compose build
 # Execute docker compose up for create containers and wait it finish
 $ docker-compose up
 
-# Note: The app run in watchmode
+# Note: The app run in watchmode and could retry connect to database if it not is created yet
+# The last message will must be "Nest application succesfully started"
 ```
 
 ## Running the app
