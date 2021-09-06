@@ -9,6 +9,7 @@ services:
     links:
       - mysqldb   
   mysqldb:
+    restart: always
     image: mysql
     ports:
       - "4306:3306"
