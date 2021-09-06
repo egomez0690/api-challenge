@@ -62,6 +62,7 @@ http://localhost:4000
 #### Description: 
 If the server returns "Hola mundo2!", it is running succesfully 
 
+#### Use POSTMAN for following endpoints
 
 http://localhost:4000/user/create (POST)
 
