@@ -13,12 +13,7 @@ export class AddressService {
     ) {}
 
     async findAddress(address) : Promise<AddressModel>{
-        return await this.addressRepository.findOne({ 
-            where: {
-                city : { id: address.city.id} ,
-                street: {id: address.street} 
-            }
-        });
+        return await this.addressRepository.findOne(address);
     }    
 
     async createAddress(address) : Promise<AddressModel> {        
