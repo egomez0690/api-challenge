@@ -1,73 +1,166 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+NestJS RestAPI Challenge. Simple database with users, addresses, cities and profiles
+
+## Prerequisites
+- Docker installed
+- Docker Compose installed
+- Postman
+- Client MySQL (MySQL Workbench). Only for initial data load
+
 
 ## Installation
 
+Download or clone the project in some directory and open cmd/bash in this directory. <br />
+Execute ls/dir command and verify if exists "docker-compose.yml" file 
+
 ```bash
-$ npm install
+# Execute docker compose build for create images and wait it finish 
+$ docker-compose build
+
+# Execute docker compose up for create containers and wait it finish
+$ docker-compose up
+
+# Note: The app run in watchmode
 ```
 
 ## Running the app
 
-```bash
-# development
-$ npm run start
+### API Port
+API port is 4000 locally
 
-# watch mode
-$ npm run start:dev
+### DB Port and credentials
+- DB (MySql) port is 4306 locally
+- user: root
+- pass:1234
 
-# production mode
-$ npm run start:prod
+### Initial City Table Data Load
+
+Connect to database and execute the following script:
+``` sql
+INSERT INTO usuarios_db.city (name)
+VALUES('Moron');
+
+INSERT INTO usuarios_db.city (name)
+VALUES('Haedo');
+
+INSERT INTO usuarios_db.city (name)
+VALUES('Nuñez');
+
+COMMIT
 ```
 
-## Test
+## API Test
 
-```bash
-# unit tests
-$ npm run test
+### Endpoints
 
-# e2e tests
-$ npm run test:e2e
+http://localhost:4000
 
-# test coverage
-$ npm run test:cov
+#### Description: 
+If the server returns "Hola mundo2!", it is running succesfully 
+
+
+http://localhost:4000/user/create (POST)
+
+#### RequestBody(JSON) example:
+```json
+{
+    "username": "test",
+    "password": "1234",
+    "name": "Test - WorkOffice",
+    "address": "Av Libertador 101",
+    "cityId": 1
+}
 ```
 
-## Support
+#### Description: 
+Create user profile with sent data
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### Validations: 
+- All field are required
+- City exist
+- If user not exist, it will be created
+- If address not exist, it will be created
+- If a profile with user and address given exist, it won't be created.
 
-## Stay in touch
+#### Successfull Response:
+```json
+{
+    "message": "User succesfully created"
+}
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+http://localhost:4000/user/login (POST)
 
-## License
+#### RequestBody(JSON) example:
+```json
+{
+    "username": "test",
+    "password": "pass"
+}
+```
 
-Nest is [MIT licensed](LICENSE).
+#### Description: 
+Validate the credentials and return JWT token
+
+#### Validations: 
+- All field are required
+- Credentiales are valid
+
+#### Successfull Response Example:
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjMwOTY1Mzk0LCJleHAiOjE2MzA5NjU1MTR9.HJT5no0Os-qsJpLvipP2x9ppT3iz9Vw4qi8OO45YLF0"
+}
+```
+
+http://localhost:4000/user/profile (GET)
+
+#### Authorization Header:
+The authorization header value will be the obtained token on login method
+
+#### Description: 
+Return a relevant user profile
+
+#### Validations: 
+- Token is valid. The token expires in 2 minutes.
+
+#### Successfull Response Example:
+```json
+{
+    "id": 1,
+    "name": "Ezequiel Gomez - Dabove",
+    "address": {
+        "street": "Los Dabove2080",
+        "city": "Moron"
+    }
+}
+```
+
+## Stopping the app
+
+#### Open other console and write the following command:
+```bash 
+$ docker ps -a
+
+# Note: Take the created container ID
+```
+
+#### Stop the container
+```bash 
+$ docker container stop ID
+```
+
+#### Start the container again
+
+```bash 
+$ docker start ID
+```
+
+
+- Author - [Ezequiel Gomez]
+- Website - [g.ezequiel90@gmail.com]
+- Linkedin - [www.linkedin.com/in/ezequiel-gómez-639415127]
+
