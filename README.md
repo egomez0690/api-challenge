@@ -147,7 +147,7 @@ Return a relevant user profile
 ```bash 
 $ docker ps -a
 
-# Note: The containers with followings names must be created
+# Note: The containers with followings names were created
 api-challenge-main_apirest_1
 api-challenge-main_mysqldb_1
 ```
