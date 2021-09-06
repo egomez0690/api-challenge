@@ -147,18 +147,25 @@ Return a relevant user profile
 ```bash 
 $ docker ps -a
 
-# Note: Take the created container ID
+# Note: The containers with followings names must be created
+api-challenge-main_apirest_1
+api-challenge-main_mysqldb_1
 ```
 
-#### Stop the container
+#### Stop the containers
 ```bash 
-$ docker container stop ID
+$ docker container stop api-challenge-main_apirest_1
+$ docker container stop api-challenge-main_mysqldb_1
 ```
 
-#### Start the container again
+#### Start the containers again
 
 ```bash 
-$ docker start ID
+$ docker start api-challenge-main_mysqldb_1
+$ docker start api-challenge-main_apirest_1
+
+Note: The watch mode will not be executed
+Alternative: Remove the containers and execute docker-commpose up again.
 ```
 
 
